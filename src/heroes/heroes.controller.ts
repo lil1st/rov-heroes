@@ -29,13 +29,8 @@ export class HeroesController {
   }
 
   @Get()
-  async findAllHeroes() {
-    const response = await this.service.hero.findMany();
-    const res = {
-      status: 'success',
-      data: response,
-    };
-    return res;
+  findAllHeroes(): Promise<HeroDto[]> {
+    return this.service.hero.findMany();
   }
 
   @Get('/:id')
@@ -47,7 +42,7 @@ export class HeroesController {
     });
   }
 
-  @Patch('/:id/updateLevel')
+  @Patch('/updateLevel/:id')
   updateLevel(
     @Param('id') id: number,
     @Body('level') level: number,
@@ -62,7 +57,7 @@ export class HeroesController {
     });
   }
 
-  @Delete('/:id')
+  @Delete('/deleteHero/:id')
   deleteHero(@Param('id') id: number): Promise<HeroDto> {
     return this.service.hero.delete({
       where: {
